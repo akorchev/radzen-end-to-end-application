@@ -1,0 +1,58 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "col": 12,
+      "data": "",
+      "events": {
+        "cancel": [
+          {
+            "type": "back"
+          }
+        ],
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "Unable to create new Order!",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.createOrder",
+            "parameters": [
+              {
+                "name": "Order",
+                "value": "${event}"
+              }
+            ],
+            "then": [
+              {
+                "path": "orders",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "format": "date-time",
+          "property": "OrderDate",
+          "required": true,
+          "title": "Order Date",
+          "type": "string"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "events": {
+    "load": []
+  },
+  "name": "Add Order"
+}

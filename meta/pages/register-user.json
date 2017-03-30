@@ -1,0 +1,52 @@
+{
+  "access": "Everybody",
+  "components": [
+    {
+      "col": 12,
+      "fields": [
+        {
+          "property": "email",
+          "required": true,
+          "title": "Email"
+        },
+        {
+          "format": "password",
+          "property": "password",
+          "required": true,
+          "title": "Password"
+        }
+      ],
+      "events": {
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "${result.error}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Security.registerUser",
+            "parameters": [
+              {
+                "name": "email",
+                "value": "${event.email}"
+              },
+              {
+                "name": "password",
+                "value": "${event.password}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "row": 0,
+      "section": null,
+      "submitText": "Register",
+      "type": "form"
+    }
+  ],
+  "name": "Register User"
+}

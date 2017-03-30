@@ -1,0 +1,86 @@
+{
+  "components": [
+    {
+      "col": 12,
+      "data": "${product}",
+      "events": {
+        "cancel": [
+          {
+            "type": "back"
+          }
+        ],
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "Unable to update Productwith Id:${parameters.Id}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.updateProduct",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${parameters.Id}"
+              },
+              {
+                "name": "Product",
+                "value": "${product}"
+              }
+            ],
+            "then": [
+              {
+                "path": "products",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "property": "ProductName",
+          "required": true,
+          "title": "Product Name",
+          "type": "string"
+        },
+        {
+          "format": "decimal",
+          "property": "ProductPrice",
+          "required": true,
+          "title": "Product Price",
+          "type": "number"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Test.getProductById",
+        "parameters": [
+          {
+            "name": "Id",
+            "value": "${parameters.Id}"
+          }
+        ],
+        "then": [
+          {
+            "name": "product",
+            "type": "set",
+            "value": "${result}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Product",
+  "access": "Authenticated"
+}

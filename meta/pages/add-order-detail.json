@@ -1,0 +1,98 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "col": 12,
+      "data": "",
+      "events": {
+        "cancel": [
+          {
+            "type": "back"
+          }
+        ],
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "Unable to create new OrderDetail!",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.createOrderDetail",
+            "parameters": [
+              {
+                "name": "OrderDetail",
+                "value": "Object.assign(${event}, {OrderId: ${parameters.OrderId}})"
+              }
+            ],
+            "then": [
+              {
+                "parameters": [
+                  {
+                    "name": "Id",
+                    "value": "${parameters.OrderId}"
+                  }
+                ],
+                "path": "edit-order",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "property": "Quantity",
+          "required": true,
+          "title": "Quantity",
+          "type": "integer"
+        },
+        {
+          "data": "${getProductsResult}",
+          "placeholder": "Choose Product",
+          "property": "ProductId",
+          "required": true,
+          "textProperty": "Id",
+          "title": "Product Id",
+          "type": "integer",
+          "valueProperty": "Id"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Test.getOrders",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getOrdersResult",
+            "type": "set",
+            "value": "${result.value}"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "Test.getProducts",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getProductsResult",
+            "type": "set",
+            "value": "${result.value}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Add Order Detail"
+}

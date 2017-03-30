@@ -1,0 +1,41 @@
+{
+  "access": "Administrator",
+  "components": [
+    {
+      "col": 12,
+      "data": "",
+      "events": {
+        "submit": [
+          {
+            "name": "Security.createRole",
+            "parameters": [
+              {
+                "name": "Role",
+                "value": "${event}"
+              }
+            ],
+            "then": [
+              {
+                "path": "roles",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "property": "name",
+          "required": true,
+          "title": "Name",
+          "type": "string"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "name": "Create Role"
+}

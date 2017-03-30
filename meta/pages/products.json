@@ -1,0 +1,161 @@
+{
+  "components": [
+    {
+      "allowDelete": true,
+      "allowAdd": true,
+      "allowFiltering": true,
+      "allowMultiSorting": false,
+      "allowPaging": true,
+      "allowSorting": true,
+      "col": 12,
+      "count": "${getProductsCount}",
+      "data": "${getProductsResult}",
+      "events": {
+        "loadData": [
+          {
+            "name": "Test.getProducts",
+            "parameters": [
+              {
+                "name": "$top",
+                "value": "this.components[0].allowPaging ? event.top : null"
+              },
+              {
+                "name": "$skip",
+                "value": "this.components[0].allowPaging ? event.skip : null"
+              },
+              {
+                "name": "$count",
+                "value": "this.components[0].allowPaging"
+              },
+              {
+                "name": "$orderby",
+                "value": "${event.orderby}"
+              },
+              {
+                "name": "$filter",
+                "value": "${event.filter}"
+              }
+            ],
+            "then": [
+              {
+                "name": "getProductsResult",
+                "type": "set",
+                "value": "${result.value}"
+              },
+              {
+                "name": "getProductsCount",
+                "type": "set",
+                "value": "this.components[0].allowPaging ? result['@odata.count'] : ${result.value.length}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ],
+        "delete": [
+          {
+            "error": [
+              {
+                "detail": "Unable to delete Product with Id:${event.Id}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.deleteProduct",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${event.Id}"
+              }
+            ],
+            "then": [
+              {
+                "detail": "Product with Id:${event.Id} deleted!",
+                "severity": "success",
+                "summary": "Success",
+                "type": "notify"
+              }
+            ],
+            "type": "invoke"
+          }
+        ],
+        "select": [
+          {
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${event.Id}"
+              }
+            ],
+            "path": "edit-product",
+            "type": "popup"
+          }
+        ],
+        "add": [
+          {
+            "path": "add-product",
+            "type": "popup"
+          }
+        ]
+      },
+      "row": 1,
+      "section": null,
+      "title": "",
+      "columns": [
+        {
+          "property": "Id",
+          "title": "Id",
+          "type": "integer"
+        },
+        {
+          "property": "ProductName",
+          "title": "Product Name",
+          "type": "string"
+        },
+        {
+          "format": "decimal",
+          "property": "ProductPrice",
+          "title": "Product Price",
+          "type": "number"
+        }
+      ],
+      "type": "grid"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Test.getProducts",
+        "parameters": [
+          {
+            "name": "$top",
+            "value": "this.components[0].allowPaging ? this.components[0].pageSize : null"
+          },
+          {
+            "name": "$skip",
+            "value": "this.components[0].allowPaging ? 0 : null"
+          },
+          {
+            "name": "$count",
+            "value": "this.components[0].allowPaging"
+          }
+        ],
+        "then": [
+          {
+            "name": "getProductsResult",
+            "type": "set",
+            "value": "${result.value}"
+          },
+          {
+            "name": "getProductsCount",
+            "type": "set",
+            "value": "this.components[0].allowPaging ? result['@odata.count'] : ${result.value.length}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Products",
+  "access": "Authenticated"
+}

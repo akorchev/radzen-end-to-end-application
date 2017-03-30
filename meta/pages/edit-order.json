@@ -1,0 +1,218 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "col": 12,
+      "data": "${order}",
+      "events": {
+        "cancel": [
+          {
+            "type": "back"
+          }
+        ],
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "Unable to update Orderwith Id:${parameters.Id}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.updateOrder",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${parameters.Id}"
+              },
+              {
+                "name": "Order",
+                "value": "${order}"
+              }
+            ],
+            "then": [
+              {
+                "path": "orders",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "property": "UserName",
+          "required": true,
+          "title": "User Name",
+          "type": "string"
+        },
+        {
+          "format": "date-time",
+          "property": "OrderDate",
+          "required": true,
+          "title": "Order Date",
+          "type": "string"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    },
+    {
+      "allowAdd": true,
+      "allowDelete": true,
+      "col": 12,
+      "columns": [
+        {
+          "property": "Id",
+          "title": "Id",
+          "type": "integer"
+        },
+        {
+          "property": "OrderId",
+          "title": "Order Id",
+          "type": "integer"
+        },
+        {
+          "property": "ProductId",
+          "title": "Product Id",
+          "type": "integer"
+        },
+        {
+          "property": "Quantity",
+          "title": "Quantity",
+          "type": "integer"
+        }
+      ],
+      "count": "${getOrderDetailsCount}",
+      "data": "${getOrderDetailsResult}",
+      "events": {
+        "add": [
+          {
+            "parameters": [
+              {
+                "name": "OrderId",
+                "value": "${parameters.Id}"
+              }
+            ],
+            "path": "add-order-detail",
+            "type": "popup"
+          }
+        ],
+        "delete": [
+          {
+            "name": "Test.deleteOrderDetail",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${event.Id}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ],
+        "loadData": [
+          {
+            "name": "Test.getOrderDetails",
+            "parameters": [
+              {
+                "name": "$top",
+                "value": "this.components[1].allowPaging ? event.top : null"
+              },
+              {
+                "name": "$skip",
+                "value": "this.components[1].allowPaging ? event.skip : null"
+              },
+              {
+                "name": "$count",
+                "value": "this.components[1].allowPaging"
+              },
+              {
+                "name": "$orderby",
+                "value": "${event.orderby}"
+              },
+              {
+                "name": "$filter",
+                "value": "${event.filter}"
+              }
+            ],
+            "then": [
+              {
+                "name": "getOrderDetailsResult",
+                "type": "set",
+                "value": "${result.value}"
+              },
+              {
+                "name": "getOrderDetailsCount",
+                "type": "set",
+                "value": "this.components[1].allowPaging ? result['@odata.count'] : ${result.value.length}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "row": 1,
+      "section": null,
+      "type": "grid"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Test.getOrderById",
+        "parameters": [
+          {
+            "name": "Id",
+            "value": "${parameters.Id}"
+          }
+        ],
+        "then": [
+          {
+            "name": "order",
+            "type": "set",
+            "value": "${result}"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "Test.getOrderDetails",
+        "parameters": [
+          {
+            "name": "$top",
+            "value": "this.components[1].allowPaging ? this.components[1].pageSize : null"
+          },
+          {
+            "name": "$skip",
+            "value": "this.components[1].allowPaging ? 0 : null"
+          },
+          {
+            "name": "$count",
+            "value": "this.components[1].allowPaging"
+          },
+          {
+            "name": "$filter",
+            "value": "OrderId eq ${parameters.Id}"
+          }
+        ],
+        "then": [
+          {
+            "name": "getOrderDetailsResult",
+            "type": "set",
+            "value": "${result.value}"
+          },
+          {
+            "name": "getOrderDetailsCount",
+            "type": "set",
+            "value": "this.components[1].allowPaging ? result['@odata.count'] : ${result.value.length}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Order"
+}

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-sm-12">
+    <rz-grid
+      [allowDelete]="components[0].allowDelete"
+      [allowAdd]="components[0].allowAdd"
+      [allowFiltering]="components[0].allowFiltering"
+      [allowMultiSorting]="components[0].allowMultiSorting"
+      [allowPaging]="components[0].allowPaging"
+      [allowSorting]="components[0].allowSorting"
+      [count]="getOrdersCount"
+      [data]="getOrdersResult"
+      [title]="components[0].title"
+      [columns]="components[0].columns"
+      (loadData)="grid0LoadData($event)"
+      (delete)="grid0Delete($event)"
+      (select)="grid0Select($event)"
+      (add)="grid0Add($event)"
+    ></rz-grid>
+  </div>
+</div>
+<rz-notification [messages]="messages"></rz-notification>

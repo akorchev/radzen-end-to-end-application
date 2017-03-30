@@ -1,0 +1,50 @@
+{
+  "access": "Administrator",
+  "components": [
+    {
+      "allowDelete": true,
+      "col": 12,
+      "data": "${getUsersResult}",
+      "events": {
+        "delete": [
+          {
+            "name": "Security.deleteUser",
+            "parameters": [
+              {
+                "name": "id",
+                "value": "${event.id}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "row": 0,
+      "section": null,
+      "type": "grid"
+    },
+    {
+      "col": 12,
+      "data": "",
+      "row": 1,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Security.getUsers",
+        "then": [
+          {
+            "name": "getUsersResult",
+            "type": "set",
+            "value": "${result}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Users"
+}

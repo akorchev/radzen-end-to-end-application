@@ -1,0 +1,538 @@
+{
+  "basePath": "/odata/Test",
+  "definitions": {
+    "Order": {
+      "properties": {
+        "Id": {
+          "type": "integer",
+          "x-key": true
+        },
+        "OrderDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "UserName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Id",
+        "UserName",
+        "OrderDate"
+      ],
+      "x-table": "dbo.Orders"
+    },
+    "OrderDetail": {
+      "properties": {
+        "Id": {
+          "type": "integer",
+          "x-key": true
+        },
+        "OrderId": {
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Orders",
+            "principalKey": "Id"
+          }
+        },
+        "ProductId": {
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Products",
+            "principalKey": "Id"
+          }
+        },
+        "Quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "Id",
+        "Quantity",
+        "OrderId",
+        "ProductId"
+      ],
+      "x-table": "dbo.OrderDetails"
+    },
+    "OrderDetailResponse": {
+      "properties": {
+        "value": {
+          "items": {
+            "$ref": "#/definitions/OrderDetail"
+          },
+          "type": "array"
+        }
+      },
+      "required": []
+    },
+    "OrderResponse": {
+      "properties": {
+        "value": {
+          "items": {
+            "$ref": "#/definitions/Order"
+          },
+          "type": "array"
+        }
+      },
+      "required": []
+    },
+    "Product": {
+      "properties": {
+        "Id": {
+          "type": "integer",
+          "x-key": true
+        },
+        "ProductName": {
+          "type": "string"
+        },
+        "ProductPrice": {
+          "format": "decimal",
+          "type": "number"
+        }
+      },
+      "required": [
+        "Id",
+        "ProductName",
+        "ProductPrice"
+      ],
+      "x-table": "dbo.Products"
+    },
+    "ProductResponse": {
+      "properties": {
+        "value": {
+          "items": {
+            "$ref": "#/definitions/Product"
+          },
+          "type": "array"
+        }
+      },
+      "required": []
+    }
+  },
+  "host": null,
+  "info": {
+    "title": "Test",
+    "version": "1.0.0",
+    "x-connector": "mssql",
+    "x-type": "odata"
+  },
+  "paths": {
+    "/OrderDetails": {
+      "get": {
+        "operationId": "getOrderDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/OrderDetailResponse",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createOrderDetail",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "OrderDetail",
+            "schema": {
+              "$ref": "#/definitions/OrderDetail"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "/OrderDetails({Id})": {
+      "delete": {
+        "operationId": "deleteOrderDetail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getOrderDetailById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/OrderDetail",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateOrderDetail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "OrderDetail",
+            "schema": {
+              "$ref": "#/definitions/OrderDetail"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "/Orders": {
+      "get": {
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/OrderResponse",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Order",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "/Orders({Id})": {
+      "delete": {
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getOrderById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Order",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Order",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "/Products": {
+      "get": {
+        "operationId": "getProducts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ProductResponse",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "/Products({Id})": {
+      "delete": {
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Product",
+              "description": ""
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error",
+              "description": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemes": [
+    "http"
+  ]
+}

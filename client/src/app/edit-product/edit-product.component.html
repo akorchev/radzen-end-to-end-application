@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-sm-12">
+    <rz-form
+      [data]="product"
+      [fields]="components[0].fields"
+      (cancel)="form0Cancel($event)"
+      (submit)="form0Submit($event)"
+    ><rz-form-field property="ProductName" required="true" title="Product Name" type="string"></rz-form-field>
+    <rz-form-field format="decimal" property="ProductPrice" required="true" title="Product Price" type="number"></rz-form-field>
+    </rz-form>
+  </div>
+</div>
+<rz-notification [messages]="messages"></rz-notification>

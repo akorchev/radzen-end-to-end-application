@@ -1,0 +1,38 @@
+{
+  "dataSources": [
+    "Test"
+  ],
+  "generator": "@radzen/angular-generator",
+  "https": false,
+  "logo": "",
+  "name": "Radzen End To End Angular Application",
+  "navigation": [
+    "Products",
+    "Orders"
+  ],
+  "pages": [
+    "Products",
+    "Add Product",
+    "Edit Product",
+    "Orders",
+    "Add Order",
+    "Edit Order",
+    "Add Order Detail",
+    "Login",
+    "Users",
+    "Roles",
+    "Register User",
+    "Create Role"
+  ],
+  "port": 8000,
+  "security": {
+    "autoGeneratePages": true,
+    "dataSource": "Test",
+    "loginPage": "Login",
+    "roles": [
+      "Administrator"
+    ]
+  },
+  "startPage": "Products",
+  "theme": "blue-grey"
+}

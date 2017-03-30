@@ -1,0 +1,64 @@
+{
+  "components": [
+    {
+      "col": 12,
+      "data": "",
+      "events": {
+        "cancel": [
+          {
+            "type": "back"
+          }
+        ],
+        "submit": [
+          {
+            "error": [
+              {
+                "detail": "Unable to create new Product!",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.createProduct",
+            "parameters": [
+              {
+                "name": "Product",
+                "value": "${event}"
+              }
+            ],
+            "then": [
+              {
+                "path": "products",
+                "type": "navigate"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "property": "ProductName",
+          "required": true,
+          "title": "Product Name",
+          "type": "string"
+        },
+        {
+          "format": "decimal",
+          "property": "ProductPrice",
+          "required": true,
+          "title": "Product Price",
+          "type": "number"
+        }
+      ],
+      "row": 0,
+      "section": null,
+      "type": "form"
+    }
+  ],
+  "events": {
+    "load": []
+  },
+  "name": "Add Product",
+  "access": "Authenticated"
+}

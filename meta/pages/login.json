@@ -1,0 +1,47 @@
+{
+  "access": "Everybody",
+  "components": [
+    {
+      "col": 12,
+      "events": {
+        "login": [
+          {
+            "name": "Security.login",
+            "parameters": [
+              {
+                "name": "username",
+                "value": "${event.username}"
+              },
+              {
+                "name": "password",
+                "value": "${event.password}"
+              }
+            ],
+            "type": "invoke",
+            "error": [
+              {
+                "detail": "${result.error}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ]
+          }
+        ],
+        "register": [
+          {
+            "path": "register-user",
+            "type": "navigate"
+          }
+        ]
+      },
+      "row": 0,
+      "section": null,
+      "type": "login"
+    }
+  ],
+  "events": {
+    "load": []
+  },
+  "name": "Login"
+}

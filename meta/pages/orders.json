@@ -1,0 +1,161 @@
+{
+  "components": [
+    {
+      "allowDelete": true,
+      "allowAdd": true,
+      "allowFiltering": true,
+      "allowMultiSorting": false,
+      "allowPaging": true,
+      "allowSorting": true,
+      "col": 12,
+      "count": "${getOrdersCount}",
+      "data": "${getOrdersResult}",
+      "events": {
+        "loadData": [
+          {
+            "name": "Test.getOrders",
+            "parameters": [
+              {
+                "name": "$top",
+                "value": "this.components[0].allowPaging ? event.top : null"
+              },
+              {
+                "name": "$skip",
+                "value": "this.components[0].allowPaging ? event.skip : null"
+              },
+              {
+                "name": "$count",
+                "value": "this.components[0].allowPaging"
+              },
+              {
+                "name": "$orderby",
+                "value": "${event.orderby}"
+              },
+              {
+                "name": "$filter",
+                "value": "${event.filter}"
+              }
+            ],
+            "then": [
+              {
+                "name": "getOrdersResult",
+                "type": "set",
+                "value": "${result.value}"
+              },
+              {
+                "name": "getOrdersCount",
+                "type": "set",
+                "value": "this.components[0].allowPaging ? result['@odata.count'] : ${result.value.length}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ],
+        "delete": [
+          {
+            "error": [
+              {
+                "detail": "Unable to delete Order with Id:${event.Id}",
+                "severity": "error",
+                "summary": "Error",
+                "type": "notify"
+              }
+            ],
+            "name": "Test.deleteOrder",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${event.Id}"
+              }
+            ],
+            "then": [
+              {
+                "detail": "Order with Id:${event.Id} deleted!",
+                "severity": "success",
+                "summary": "Success",
+                "type": "notify"
+              }
+            ],
+            "type": "invoke"
+          }
+        ],
+        "select": [
+          {
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${event.Id}"
+              }
+            ],
+            "path": "edit-order",
+            "type": "popup"
+          }
+        ],
+        "add": [
+          {
+            "path": "add-order",
+            "type": "popup"
+          }
+        ]
+      },
+      "row": 1,
+      "section": null,
+      "title": "",
+      "columns": [
+        {
+          "property": "Id",
+          "title": "Id",
+          "type": "integer"
+        },
+        {
+          "property": "UserName",
+          "title": "User Name",
+          "type": "string"
+        },
+        {
+          "format": "date-time",
+          "property": "OrderDate",
+          "title": "Order Date",
+          "type": "string"
+        }
+      ],
+      "type": "grid"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Test.getOrders",
+        "parameters": [
+          {
+            "name": "$top",
+            "value": "this.components[0].allowPaging ? this.components[0].pageSize : null"
+          },
+          {
+            "name": "$skip",
+            "value": "this.components[0].allowPaging ? 0 : null"
+          },
+          {
+            "name": "$count",
+            "value": "this.components[0].allowPaging"
+          }
+        ],
+        "then": [
+          {
+            "name": "getOrdersResult",
+            "type": "set",
+            "value": "${result.value}"
+          },
+          {
+            "name": "getOrdersCount",
+            "type": "set",
+            "value": "this.components[0].allowPaging ? result['@odata.count'] : ${result.value.length}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Orders",
+  "access": "Authenticated"
+}

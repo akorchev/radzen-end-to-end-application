@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-12">
+    <rz-grid
+      [allowDelete]="components[0].allowDelete"
+      [data]="getUsersResult"
+      (delete)="grid0Delete($event)"
+    ></rz-grid>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <rz-form
+      [data]="components[1].data"
+    ></rz-form>
+  </div>
+</div>
+<rz-notification [messages]="messages"></rz-notification>

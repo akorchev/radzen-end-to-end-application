@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-sm-12">
+    <rz-form
+      [data]="components[0].data"
+      [fields]="components[0].fields"
+      (cancel)="form0Cancel($event)"
+      (submit)="form0Submit($event)"
+    ><rz-form-field format="date-time" property="OrderDate" required="true" title="Order Date" type="string"></rz-form-field>
+    </rz-form>
+  </div>
+</div>
+<rz-notification [messages]="messages"></rz-notification>

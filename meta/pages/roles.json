@@ -1,0 +1,66 @@
+{
+  "access": "Administrator",
+  "components": [
+    {
+      "allowDelete": true,
+      "col": 12,
+      "columns": [
+        {
+          "property": "name",
+          "title": "Role"
+        }
+      ],
+      "data": "${getRolesResult}",
+      "events": {
+        "delete": [
+          {
+            "name": "Security.deleteRole",
+            "parameters": [
+              {
+                "name": "id",
+                "value": "${event.id}"
+              }
+            ],
+            "type": "invoke"
+          }
+        ]
+      },
+      "height": 684,
+      "row": 1,
+      "section": null,
+      "type": "grid"
+    },
+    {
+      "col": 5,
+      "events": {
+        "click": [
+          {
+            "path": "create-role",
+            "type": "navigate"
+          }
+        ]
+      },
+      "row": 0,
+      "section": null,
+      "style": "success",
+      "text": "Add Role",
+      "type": "button"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Security.getRoles",
+        "then": [
+          {
+            "name": "getRolesResult",
+            "type": "set",
+            "value": "${result}"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Roles"
+}
