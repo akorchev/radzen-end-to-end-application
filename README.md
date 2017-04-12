@@ -19,7 +19,7 @@
     1. Add a __Then__ action that navigates back.
 1. Open the __Add Order__ page, select the form component and remove the `User Name` field.
 1. Open the __Edit Order__ page, select the form component and remove the `User Name` field.
-1. Run. Stop to customize the generated code.
+1. Run. Open an order and add order detail. Stop to customize the generated code.
 1. Open generated application with your favorite edtor and add a new file called `OrdersController.custom.cs` next to `OrdersController.cs`:
     ```C#
     using System.Security.Claims;
